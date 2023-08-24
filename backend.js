@@ -62,11 +62,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-function initadmin(){
-  console.log("init");
-  render();
-  setInterval(render,10000);
-}
+
 async function render(){
   const q = query(collection(db, "product"));
   const qs = await getDocs(q);
