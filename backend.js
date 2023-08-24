@@ -108,5 +108,9 @@ async function render(){
     }
   }
 }
+function initadmin(){
+  render();
+  setInterval(render,10000);
+}
 window.addproduct=addproduct;
 window.initadmin=initadmin;
