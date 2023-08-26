@@ -74,6 +74,9 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       if(doc.id=="banner"){
         let r=doc.data();
         document.getElementById("banner").src=r['link'];
+      }else if(doc.id=="logo"){
+        let r=doc.data();
+        document.getElementById("logoid").src=r['link'];
       }
     })
     render();
