@@ -67,7 +67,15 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       }
     }
   }
-  function inituser(){
+  async function inituser(){
+    const q = query(collection(db, "images"));
+    const qs = await getDocs(q);
+    qs.forEach((doc)=>{
+      if(doc.id=="banner"){
+        let r=doc.data();
+        document.getElementById("banner").src=r['link'];
+      }
+    })
     render();
     setInterval(render,10000);
   }
