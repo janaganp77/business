@@ -67,7 +67,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
   
       }
       for(let j of dis){
-        var cs=j.getElementsByClassName('card-text');
+        var cs=j.getElementsByClassName('card-title');
         let max=cs[0].clientHeight;
         for(let k of cs){
           if(max<k.clientHeight){
