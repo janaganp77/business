@@ -88,16 +88,29 @@ async function render(){
       }
       temp+="<div class='col-lg-4' style='padding:5px;'>";
       temp+='<div class="card" style="background:#e8e8e8;width: 100%;height:100%;"><img style="width:90%;padding:10px;padding-top:2vh;display:block;margin:auto;height:33vh;" src="'+pro[i]['image']+'" class="card-img-top" alt="'+pro[i]['name']+'"><div class="card-body"><h6 style="text-align:center;font-weight:600;font-size:x-large;" class="card-title">'+pro[i]['name']+'</h6><p style="background:white;border:1px solid black;padding:10px;text-align:left;overflow:hidden;" class="card-text">'+pro[i]['description']+'</p><a target="_blank" href="'+pro[i]['link']+'" class="btn btn-primary" style="width:30%;text-align:center;">Buy</a><a class="btn btn-danger" style="width:30%;text-align:center;margin:5%;" onclick="deletep('+pro[i]['id']+')">Delete</a><a class="btn btn-success" onclick="updatep('+pro[i]['id']+')" style="width:30%;text-align:center;">Edit</a></div></div></div>';
+      pos+=1;
       if(pos==3){
         temp+="</div>"
         pos=0;
       }
-      pos=pos+1;
     }
     list.innerHTML=temp;
     var dis=list.getElementsByClassName('row');
     for(let j of dis){
       var cs=j.getElementsByClassName('card-text');
+      let max=cs[0].clientHeight;
+      for(let k of cs){
+        if(max<k.clientHeight){
+          max=k.clientHeight;
+        }
+      }
+      for(let k of cs){
+        k.style.height=max+"px";
+      }
+
+    }
+    for(let j of dis){
+      var cs=j.getElementsByClassName('card-title');
       let max=cs[0].clientHeight;
       for(let k of cs){
         if(max<k.clientHeight){
@@ -169,7 +182,7 @@ async function updateproduct(){
     "name":name,
     "link":link,
     "description":description,
-    "image":updimgg
+    "image":String(updimgg)
   },{merge:true});
   document.getElementById('warnings1').innerHTML="<span class='text-success'><br>Product Updated</span>";
   await sleep(3000);
@@ -185,6 +198,19 @@ function imgchg(){
     document.getElementById('proimg').src=fr.result;
     updimgg=fr.result;
   }
+}
+function tourl(sou){
+  let xhr=new XMLHttpRequest();
+  xhr.open("POST","https://freeimage.host/api/1/upload");
+  var data=new FormData();
+  data.append('key','6d207e02198a847aa98d0a2a901485a5');
+  data.append('source',String(sou));
+  data.append('format','json');
+  xhr.send(data);
+  xhr.onload=function(){
+    console.log(xhr.response);
+  }
+  return sou;
 }
 window.addproduct=addproduct;
 window.initadmin=initadmin;

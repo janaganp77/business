@@ -35,7 +35,6 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
     if(await emailexistadmin(email.value)){
       var q= await getDoc(doc(db,'admin',email.value));
       var data=q.data();
-      console.log(data);
       if(data['password']==password.value){
         document.getElementById('warnings').innerHTML="Login Success";
         document.getElementById('warnings').style.color='green';
