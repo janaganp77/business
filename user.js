@@ -49,7 +49,10 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
           temp+="</div>"
           pos=0;
         }
-
+        end-=1;
+        if(end==0){
+          break;
+        }
       }
       list.innerHTML=temp;
       var dis=list.getElementsByClassName('row');

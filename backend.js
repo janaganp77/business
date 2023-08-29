@@ -43,7 +43,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       }
     var q=query(collection(db,"product"));
     var qs=await getDocs(q);
-    await setDoc(doc(db,"product",String(qs.size)),{
+    await setDoc(doc(db,"product",String(new Date().getTime())),{
       "name":name.value,
       "link":link.value,
       "description":description.value,
