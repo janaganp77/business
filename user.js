@@ -18,6 +18,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   async function render(){
+    console.log("render");
     const q = query(collection(db, "product"));
     const qs = await getDocs(q);
     if(qs.size==0){
@@ -95,6 +96,23 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       }
     })
     render();
-    setInterval(render,10000);
+    setInterval(render,100000);
   }
+  var ren=true;
+  var islist=false;
+  async function renderer(){
+      if(ren==true){
+        ren=false;
+        render();
+        await sleep(3000);
+        if(islist==true){
+          render();
+          islist=false;
+        }
+        ren=true;
+      }else{
+        islist=true;
+      }
+    }
+  window.onresize=renderer;
   window.inituser=inituser;

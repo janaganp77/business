@@ -149,7 +149,7 @@ async function verify(){
 function initadmin(){
   verify();
   render();
-  setInterval(render,10000);
+  setInterval(render,100000);
   setInterval(verify,30000);
 }
 async function deletep(int){
@@ -212,9 +212,26 @@ function tourl(sou){
   }
   return sou;
 }
+var ren=true;
+var islist=false;
+async function renderer(){
+    if(ren==true){
+      ren=false;
+      render();
+      await sleep(3000);
+      if(islist==true){
+        render();
+        islist=false;
+      }
+      ren=true;
+    }else{
+      islist=true;
+    }
+  }
 window.addproduct=addproduct;
 window.initadmin=initadmin;
 window.deletep=deletep;
 window.updatep=updatep;
 window.imgchg=imgchg;
 window.updateproduct=updateproduct;
+window.onresize=renderer;
