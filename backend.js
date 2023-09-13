@@ -49,7 +49,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       "description":description.value,
       "image":String(dat),
       "open":1,
-      "id":String(qs.size),
+      "id":String(new Date().getTime()),
       "ts":new Date().getTime()
     });
     document.getElementById('warnings').innerHTML="<span class='text-success'>Product added</span>";
