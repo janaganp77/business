@@ -43,11 +43,12 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       }
     var q=query(collection(db,"product"));
     var qs=await getDocs(q);
+    var tour=await itourl(String(updimgg));
     await setDoc(doc(db,"product",String(new Date().getTime())),{
       "name":name.value,
       "link":link.value,
       "description":description.value,
-      "image":String(dat),
+      "image":itourl(String(dat)),
       "open":1,
       "id":String(new Date().getTime()),
       "ts":new Date().getTime()
@@ -178,18 +179,20 @@ async function updateproduct(){
     document.getElementById('warnings1').innerHTML="<br>Fill all fields";
     return;
   }
+  var tour=await itourl(String(updimgg));
+  console.log(tour);
   await setDoc(doc(db,"product",updv),{
     "name":name,
     "link":link,
     "description":description,
-    "image":String(updimgg)
+    "image":tour
   },{merge:true});
   document.getElementById('warnings1').innerHTML="<span class='text-success'><br>Product Updated</span>";
   await sleep(3000);
   render();
   document.getElementById('productviewclose').click();
-  document.getElementById('warnings1').innerHTML=""
-;}
+  document.getElementById('warnings1').innerHTML="";
+}
 function imgchg(){
   let imgg=document.getElementById('pimagedet').files[0];
   let fr=new FileReader();
@@ -228,6 +231,32 @@ async function renderer(){
       islist=true;
     }
   }
+async function itourl(data){
+try{
+var b64=String(data).split(',')[1];
+if(b64.length==1){
+return data;
+}
+}
+catch(e){
+var b64=String(data);
+return String(b64);
+}
+var xhr=new XMLHttpRequest();
+xhr.open('post','https://api.imgbb.com/1/upload');
+var fd=new FormData();
+fd.append('key','4d6f023b8c8dd3664e1c25bfdb2eb482');
+fd.append('image',b64);
+xhr.send(fd);
+while(true){
+  await sleep(1000);
+  if(xhr.readyState==4){
+    var res=xhr.response;
+    res=JSON.parse(res);
+    return String(res['data']['url']);
+  }
+}
+}
 window.addproduct=addproduct;
 window.initadmin=initadmin;
 window.deletep=deletep;

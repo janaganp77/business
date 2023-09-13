@@ -44,7 +44,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
           temp+="<div class='row'>";
         }
         temp+="<div class='col-lg-4' style='padding:5px;'>";
-        temp+='<div class="card" style="background:#e8e8e8;width: 100%;height:100%;"><img style="width:90%;padding:10px;padding-top:2vh;display:block;margin:auto;height:40vh;" src="'+pro[i]['image']+'" class="card-img-top" alt="'+pro[i]['name']+'"><div class="card-body"><h6 style="text-align:center;font-weight:600;font-size:x-large;" class="card-title">'+pro[i]['name']+'</h6><p style="background:white;border:1px solid black;padding:10px;text-align:justify;overflow:hidden;" class="card-text">'+pro[i]['description']+'</p><a target="_blank" href="'+pro[i]['link']+'" class="btn btn-warning" style="width:100%;text-align:center;">Buy</a></div></div></div>';
+        temp+='<div class="card" style="background:#e8e8e8;width: 100%;height:100%;"><img style="width:90%;padding:10px;padding-top:2vh;display:block;margin:auto;height:auto;max-height:550px;" src="'+pro[i]['image']+'" class="card-img-top" alt="'+pro[i]['name']+'"><div class="card-body"><h6 style="text-align:center;font-weight:600;font-size:x-large;" class="card-title">'+pro[i]['name']+'</h6><p style="background:white;border:1px solid black;padding:10px;text-align:left;line-spacing:20px;overflow:hidden;" class="card-text">'+pro[i]['description']+'</p><a target="_blank" href="'+pro[i]['link']+'" class="btn btn-warning" style="width:100%;text-align:center;">Buy</a></div></div></div>';
         pos=pos+1;
         if(pos==3){
           temp+="</div>"
@@ -67,6 +67,22 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
         }
         for(let k of cs){
           k.style.height=max+"px";
+        }
+  
+      }
+      for(let j of dis){
+        var cs=j.getElementsByTagName('img');
+        let max=cs[0].clientHeight;
+        for(let k of cs){
+          if(max<k.clientHeight){
+            max=k.clientHeight;
+          }
+        }
+        for(let k of cs){
+          var dif= max-k.clientHeight;
+          let pad=dif/2;
+          k.style.marginTop=pad+'px';
+          k.style.marginBottom=pad+'px';
         }
   
       }
@@ -96,7 +112,8 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       }
     })
     render();
-    setInterval(render,100000);
+    setTimeout(render,5000);
+    setInterval(render,10000);
   }
   var ren=true;
   var islist=false;
