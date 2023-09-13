@@ -41,16 +41,16 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
       image2.onload=function(){
         dat=image2.result;
       }
-    var q=query(collection(db,"product"));
-    var qs=await getDocs(q);
     var tour=await itourl(String(updimgg));
-    await setDoc(doc(db,"product",String(new Date().getTime())),{
+  
+    var ttt=String(new Date().getTime());
+    await setDoc(doc(db,"product",ttt),{
       "name":name.value,
       "link":link.value,
       "description":description.value,
-      "image":itourl(String(dat)),
+      "image":tour,
       "open":1,
-      "id":String(new Date().getTime()),
+      "id":ttt,
       "ts":new Date().getTime()
     });
     document.getElementById('warnings').innerHTML="<span class='text-success'>Product added</span>";
@@ -180,7 +180,6 @@ async function updateproduct(){
     return;
   }
   var tour=await itourl(String(updimgg));
-  console.log(tour);
   await setDoc(doc(db,"product",updv),{
     "name":name,
     "link":link,
@@ -202,18 +201,14 @@ function imgchg(){
     updimgg=fr.result;
   }
 }
-function tourl(sou){
-  let xhr=new XMLHttpRequest();
-  xhr.open("POST","https://freeimage.host/api/1/upload");
-  var data=new FormData();
-  data.append('key','6d207e02198a847aa98d0a2a901485a5');
-  data.append('source',String(sou));
-  data.append('format','json');
-  xhr.send(data);
-  xhr.onload=function(){
-    console.log(xhr.response);
+function imgchgg(){
+  let imgg=document.getElementById('pimage').files[0];
+  let fr=new FileReader();
+  fr.readAsDataURL(imgg);
+  fr.onload=function (){
+    document.getElementById('proimg').src=fr.result;
+    updimgg=fr.result;
   }
-  return sou;
 }
 var ren=true;
 var islist=false;
@@ -262,5 +257,6 @@ window.initadmin=initadmin;
 window.deletep=deletep;
 window.updatep=updatep;
 window.imgchg=imgchg;
+window.imgchgg=imgchgg;
 window.updateproduct=updateproduct;
 window.onresize=renderer;
