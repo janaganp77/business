@@ -34,7 +34,7 @@ import { collection, doc, getDoc , setDoc ,getDocs,query,where } from "https://c
         }
       });
       let pos=0;
-      let end=13;
+      let end=24;
       if(end>pos.length){
         end=pos.length+1;
       }
